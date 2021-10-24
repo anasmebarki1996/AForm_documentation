@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import Field from './Field';
-import { inputConfirmationValidator, inputValidator } from './Validation';
+import { useState, useEffect } from "react";
+import Field from "./Field";
+import { inputConfirmationValidator, inputValidator } from "./Validation";
 
-export const FormState = (form: any, submitFunction: any) => {
+export const FormState = (form, submitFunction) => {
   const [ready, setReady] = useState(false);
 
-  const initForm = (form: any) => {
+  const initForm = (form) => {
     let formValues = {};
     let inputValidation = {};
     for (const key in form) {
@@ -20,12 +20,15 @@ export const FormState = (form: any, submitFunction: any) => {
     for (const key in formValues) {
       inputHasErrors = {
         ...inputHasErrors,
-        // @ts-ignore
-        [key]: form[key].defaultValue ? inputValidator(key, inputValidation[key], formValues[key]) : '',
+        [key]: form[key].defaultValue
+          ? inputValidator(key, inputValidation[key], formValues[key])
+          : "",
       };
 
-      // @ts-ignore
-      inputVisited = { ...inputHasErrors, [key]: toString(formValues[key]) ? true : false };
+      inputVisited = {
+        ...inputHasErrors,
+        [key]: toString(formValues[key]) ? true : false,
+      };
     }
 
     return {
@@ -43,8 +46,8 @@ export const FormState = (form: any, submitFunction: any) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // inputChangeHandler activate when we type on input
-  const inputChangeHandler = (inputIdentifier: any, value: any, hasError: any, visited: any) => {
-    console.log('value');
+  const inputChangeHandler = (inputIdentifier, value, hasError, visited) => {
+    console.log("value");
     console.log(value);
     const updatedValues = {
       ...formState.inputValues,
@@ -54,14 +57,18 @@ export const FormState = (form: any, submitFunction: any) => {
     const inputValidation = { ...formState.inputValidation };
     if (visited) {
       //@ts-ignore
-      hasError = inputValidator(inputIdentifier, inputValidation[inputIdentifier], value);
-      if (inputIdentifier.includes('_confirmation') && !hasError) {
+      hasError = inputValidator(
+        inputIdentifier,
+        inputValidation[inputIdentifier],
+        value
+      );
+      if (inputIdentifier.includes("_confirmation") && !hasError) {
         // @ts-ignore
         hasError = inputConfirmationValidator(
           inputIdentifier,
           value,
           // @ts-ignore
-          formState.inputValues[inputIdentifier.split('_confirmation')[0]]
+          formState.inputValues[inputIdentifier.split("_confirmation")[0]]
         );
       }
     }
@@ -92,7 +99,7 @@ export const FormState = (form: any, submitFunction: any) => {
   };
 
   // inputChangeHandler activate when we exit the input to validate the data inserted
-  const inputBlurHandler = (inputIdentifier: any) => {
+  const inputBlurHandler = (inputIdentifier) => {
     // @ts-ignore
     const value = formState.inputValues[inputIdentifier];
     // @ts-ignore
@@ -110,9 +117,13 @@ export const FormState = (form: any, submitFunction: any) => {
     for (const key in values) {
       // @ts-ignore
       errorText = inputValidator(key, inputValidation[key], values[key]);
-      if (key.includes('_confirmation') && !errorText) {
+      if (key.includes("_confirmation") && !errorText) {
         // @ts-ignore
-        errorText = inputConfirmationValidator(key, values[key], values[key.split('_confirmation')[0]]);
+        errorText = inputConfirmationValidator(
+          key,
+          values[key],
+          values[key.split("_confirmation")[0]]
+        );
       }
       if (errorText) errors = { ...errors, [key]: errorText };
     }
@@ -125,7 +136,7 @@ export const FormState = (form: any, submitFunction: any) => {
   };
 
   // submit form
-  const submitHandler = (e: any) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     formVerifyHandler();
@@ -137,8 +148,8 @@ export const FormState = (form: any, submitFunction: any) => {
     let updateVisited = {};
 
     for (const key in form) {
-      updatedValues = { ...updatedValues, [key]: '' };
-      updateHasErrors = { ...updateHasErrors, [key]: '' };
+      updatedValues = { ...updatedValues, [key]: "" };
+      updateHasErrors = { ...updateHasErrors, [key]: "" };
       updateVisited = { ...updateVisited, [key]: false };
     }
 
@@ -160,7 +171,7 @@ export const FormState = (form: any, submitFunction: any) => {
     }
   }, [isSubmitting]);
 
-  const updateFormState = (dataObject: any) => {
+  const updateFormState = (dataObject) => {
     setReady(true);
     setFormState((prevState) => {
       return {
@@ -170,7 +181,7 @@ export const FormState = (form: any, submitFunction: any) => {
     });
   };
 
-  const handleErrorsServer = (enteredErrors: string[]) => {
+  const handleErrorsServer = (enteredErrors) => {
     let newErrors = {};
     for (const fieldName in formState.inputValues) {
       for (const enteredError of enteredErrors) {
@@ -189,8 +200,16 @@ export const FormState = (form: any, submitFunction: any) => {
     });
   };
 
-  const field = (fieldName: string, typeInput: string = 'text', defaultValue = '') => {
-    return Field(fieldName, typeInput, defaultValue, formState, inputChangeHandler, inputBlurHandler, ready);
+  const field = (fieldName, typeInput = "text", defaultValue = "") => {
+    return Field(
+      fieldName,
+      typeInput,
+      defaultValue,
+      formState,
+      inputChangeHandler,
+      inputBlurHandler,
+      ready
+    );
   };
 
   return {
