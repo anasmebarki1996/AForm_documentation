@@ -3,45 +3,37 @@ import MenuItem from './MenuItem';
 import './style.css';
 const Sidebar = ({ showMenu }) => {
   const menu = [
-    { title: 'Dashboard', icon: 'bx bx-grid-alt', link: '/', subMenu: [] },
+    { title: 'Dashboard', icon: 'home.png', link: '/', subMenu: [] },
     {
       title: 'bootstrap',
       icon: 'bootstrap.svg',
-      link: '',
-      subMenu: [
-        { title: 'Inputs', icon: 'bx bx-grid-alt', link: '/bootstrap-inputs' },
-        { title: 'Register Form', icon: 'bx bx-grid-alt', link: '' },
-        { title: 'Login Form', icon: 'bx bx-grid-alt', link: '' },
-      ],
+      link: '/bootstrap-form',
+      subMenu: [],
     },
     {
       title: 'Material UI',
       icon: 'material-ui.svg',
-      link: '',
-      subMenu: [
-        { title: 'Inputs', link: '/bootstrap-inputs' },
-        { title: 'Register Form', link: '' },
-        { title: 'Login Form', link: '' },
-      ],
+      link: '/material-ui-form',
+      subMenu: [],
     },
   ];
   return (
-    <div class={showMenu ? 'sidebar' : 'sidebar close'}>
-      <div class="logo-details">
-        <span class="logo_name">AForm</span>
+    <div className={showMenu ? 'sidebar' : 'sidebar close'}>
+      <div className="logo-details">
+        <span className="logo_name">AForm</span>
       </div>
-      <ul class="nav-links">
+      <ul className="nav-links">
         {menu.map((item, i) => (
-          <MenuItem item={item} />
+          <MenuItem item={item} key={i} />
         ))}
         <li>
-          <div class="profile-details">
-            <div class="profile-content"></div>
-            <div class="name-job">
-              <div class="profile_name">Anas Mebarki</div>
-              <div class="job">Web Developer</div>
+          <div className="profile-details">
+            <div className="profile-content"></div>
+            <div className="name-job">
+              <div className="profile_name">Anas Mebarki</div>
+              <div className="job">Web Developer</div>
             </div>
-            <i class="bx bx-log-out"></i>
+            <i className="bx bx-log-out"></i>
           </div>
         </li>
       </ul>

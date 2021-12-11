@@ -61,19 +61,22 @@
   position: relative;
   list-style: none;
   transition: all 0.4s ease;
+  height: 60px;
+  display: flex;
+  align-items: center;
 }
 .sidebar .nav-links li:hover {
   background: #1d1b31;
 }
-.sidebar .nav-links li .iocn-link {
+.sidebar .nav-links li .icon-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.sidebar.close .nav-links li .iocn-link {
+.sidebar.close .nav-links li .icon-link {
   display: block;
 }
-.sidebar .nav-links li .subMenu-icon,
+
 .sidebar .nav-links li i {
   height: 50px;
   min-width: 78px;
@@ -226,6 +229,7 @@
   height: 60px;
   display: flex;
   align-items: center;
+  background: white;
 }
 .home-section .home-content .bx-menu,
 .home-section .home-content .text {
@@ -246,7 +250,7 @@
   }
 }
 
-.subMenu-icon {
-  width: 15px;
-  height: 30px !important;
+.sidebar .nav-links li .subMenu-icon {
+  width: 30px;
+  margin: 0 15px;
 }

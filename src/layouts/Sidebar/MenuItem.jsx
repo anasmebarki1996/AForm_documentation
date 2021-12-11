@@ -7,26 +7,26 @@ const MenuItem = ({ item }) => {
     <li className={open ? 'showMenu' : ''}>
       {!item.subMenu || item.subMenu.length === 0 ? (
         <Link to={item.link}>
-          <i class={item.icon}></i>
-          <span class="link_name">{item.title}</span>
+          <img className="subMenu-icon" src={'/assets/images/sidebar/' + item.icon} alt={item.icon}></img>
+          <span className="link_name">{item.title}</span>
         </Link>
       ) : (
         <>
-          <div class="iocn-link">
+          <div className="icon-link">
             <div>
-              <img class="subMenu-icon" src={'/assets/images/sidebar/' + item.icon} alt={item.icon}></img>
-              <span class="link_name">{item.title}</span>
+              <img className="subMenu-icon" src={'/assets/images/sidebar/' + item.icon} alt={item.icon}></img>
+              <span className="link_name">{item.title}</span>
             </div>
             <i
-              class="bx bxs-chevron-down arrow"
+              className="bx bxs-chevron-down arrow"
               onClick={() => {
                 setOpen(!open);
               }}
             ></i>
           </div>
-          <ul class="sub-menu">
-            {item.subMenu.map((subMenuItem) => (
-              <li>
+          <ul className="sub-menu">
+            {item.subMenu.map((subMenuItem, index) => (
+              <li key={index}>
                 <Link to={subMenuItem.link}>{subMenuItem.title}</Link>
               </li>
             ))}

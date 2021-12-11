@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
 function Welcome() {
   return (
     <div>
-      <h1>welcome</h1>
+      <h1>AFORM</h1>
     </div>
   );
 }

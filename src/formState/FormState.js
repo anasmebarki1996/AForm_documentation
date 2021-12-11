@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import Field from "./Field";
-import { inputConfirmationValidator, inputValidator } from "./Validation";
+import { useState, useEffect } from 'react';
+import Field from './Field';
+import { inputConfirmationValidator, inputValidator } from './Validation';
 
 export const FormState = (form, submitFunction) => {
   const [ready, setReady] = useState(false);
@@ -20,9 +20,7 @@ export const FormState = (form, submitFunction) => {
     for (const key in formValues) {
       inputHasErrors = {
         ...inputHasErrors,
-        [key]: form[key].defaultValue
-          ? inputValidator(key, inputValidation[key], formValues[key])
-          : "",
+        [key]: form[key].defaultValue ? inputValidator(key, inputValidation[key], formValues[key]) : '',
       };
 
       inputVisited = {
@@ -47,8 +45,6 @@ export const FormState = (form, submitFunction) => {
 
   // inputChangeHandler activate when we type on input
   const inputChangeHandler = (inputIdentifier, value, hasError, visited) => {
-    console.log("value");
-    console.log(value);
     const updatedValues = {
       ...formState.inputValues,
       [inputIdentifier]: value,
@@ -57,18 +53,14 @@ export const FormState = (form, submitFunction) => {
     const inputValidation = { ...formState.inputValidation };
     if (visited) {
       //@ts-ignore
-      hasError = inputValidator(
-        inputIdentifier,
-        inputValidation[inputIdentifier],
-        value
-      );
-      if (inputIdentifier.includes("_confirmation") && !hasError) {
+      hasError = inputValidator(inputIdentifier, inputValidation[inputIdentifier], value);
+      if (inputIdentifier.includes('_confirmation') && !hasError) {
         // @ts-ignore
         hasError = inputConfirmationValidator(
           inputIdentifier,
           value,
           // @ts-ignore
-          formState.inputValues[inputIdentifier.split("_confirmation")[0]]
+          formState.inputValues[inputIdentifier.split('_confirmation')[0]]
         );
       }
     }
@@ -117,13 +109,9 @@ export const FormState = (form, submitFunction) => {
     for (const key in values) {
       // @ts-ignore
       errorText = inputValidator(key, inputValidation[key], values[key]);
-      if (key.includes("_confirmation") && !errorText) {
+      if (key.includes('_confirmation') && !errorText) {
         // @ts-ignore
-        errorText = inputConfirmationValidator(
-          key,
-          values[key],
-          values[key.split("_confirmation")[0]]
-        );
+        errorText = inputConfirmationValidator(key, values[key], values[key.split('_confirmation')[0]]);
       }
       if (errorText) errors = { ...errors, [key]: errorText };
     }
@@ -148,8 +136,8 @@ export const FormState = (form, submitFunction) => {
     let updateVisited = {};
 
     for (const key in form) {
-      updatedValues = { ...updatedValues, [key]: "" };
-      updateHasErrors = { ...updateHasErrors, [key]: "" };
+      updatedValues = { ...updatedValues, [key]: '' };
+      updateHasErrors = { ...updateHasErrors, [key]: '' };
       updateVisited = { ...updateVisited, [key]: false };
     }
 
@@ -163,12 +151,15 @@ export const FormState = (form, submitFunction) => {
   };
 
   useEffect(() => {
-    if (isSubmitting === true && formState.formIsValid) {
-      submitFunction();
-      setIsSubmitting(false);
-    } else {
-      setIsSubmitting(false);
-    }
+    const testFunction = async () => {
+      if (isSubmitting === true && formState.formIsValid) {
+        await submitFunction();
+        setIsSubmitting(false);
+      } else {
+        setIsSubmitting(false);
+      }
+    };
+    testFunction();
   }, [isSubmitting]);
 
   const updateFormState = (dataObject) => {
@@ -200,16 +191,8 @@ export const FormState = (form, submitFunction) => {
     });
   };
 
-  const field = (fieldName, typeInput = "text", defaultValue = "") => {
-    return Field(
-      fieldName,
-      typeInput,
-      defaultValue,
-      formState,
-      inputChangeHandler,
-      inputBlurHandler,
-      ready
-    );
+  const field = (fieldName, typeInput = 'text', defaultValue = '') => {
+    return Field(fieldName, typeInput, defaultValue, formState, inputChangeHandler, inputBlurHandler, ready);
   };
 
   return {
@@ -221,5 +204,6 @@ export const FormState = (form, submitFunction) => {
     updateFormState,
     handleErrorsServer,
     field,
+    isSubmitting,
   };
 };

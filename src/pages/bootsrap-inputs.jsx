@@ -22,31 +22,35 @@ function BootstrapInputs() {
     degree: { defaultValue: '', validate: { required: true } },
   };
 
-  const submitFunction = () => {
-    alert('done');
+  const submitFunction = async () => {
+    await new Promise((resolve) => {
+      console.log('LOADING ...');
+      setTimeout(resolve, 3000);
+    });
+    console.log('DONE');
   };
 
-  const { submitHandler, resetFormState, loading, field, handleErrorsServer } = FormState(inputValues, submitFunction);
+  const { submitHandler, isSubmitting, field } = FormState(inputValues, submitFunction);
 
   return (
-    <div className="container mt-5" onSubmit={submitHandler}>
+    <div className="card container mt-5 p-5" onSubmit={submitHandler}>
       <form className="row g-3">
-        <div className="col-md-4">
+        <div className="col-md-6">
           <Input type="text" label="first name" {...field('firstName')} />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-6">
           <Input type="text" label="last name" {...field('lastName')} />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-12">
           <Input type="email" label="email" {...field('email')} />
         </div>
         <div className="col-md-6">
           <Input type="password" label="password" {...field('password')} />
-        </div>{' '}
+        </div>
         <div className="col-md-6">
           <Input type="password" label="password confirm" {...field('password_confirmation')} />
         </div>
-        <div className="col-md-3">
+        <div className="col-md-6">
           <Select label="password confirm" {...field('gender')}>
             <option selected disabled value="">
               select gender ...
@@ -71,8 +75,8 @@ function BootstrapInputs() {
           <Checkbox type="checkbox" label="agree terms & conditions" {...field('agree', 'checkbox')} />
         </div>
         <div className="col-12">
-          <button className="btn btn-primary" type="submit">
-            Submit form
+          <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Loading ...' : ' Submit'}
           </button>
         </div>
       </form>
